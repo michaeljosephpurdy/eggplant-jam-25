@@ -1,0 +1,51 @@
+{
+	"identifier": "Level_0",
+	"uniqueIdentifer": "6b43f440-25d0-11ef-9316-835ad4ed59ca",
+	"x": 416,
+	"y": 944,
+	"width": 384,
+	"height": 216,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields" : {},
+	"layers": [
+		"Background.png",
+		"World_Auto.png",
+		"Foreground.png"
+	],
+	"entities": {
+		"PLAYER_SPAWN": [
+			{
+				"id": "PLAYER_SPAWN",
+				"iid": "297be7e0-c210-11ef-ad6a-57f954591861",
+				"layer": "Entities",
+				"x": 192,
+				"y": 16,
+				"width": 16,
+				"height": 16,
+				"color": 0,
+				"customFields" : {}
+			}
+		],
+		"LEVEL_EXIT": [
+			{
+				"id": "LEVEL_EXIT",
+				"iid": "baabbcd0-c210-11ef-ad6a-cfc3a4536298",
+				"layer": "Entities",
+				"x": 256,
+				"y": 160,
+				"width": 16,
+				"height": 16,
+				"color": 2434341,
+				"customFields": {
+					"entrance": {
+						"entityIid": "e59db1f0-c210-11ef-ad6a-4bdb30530347",
+						"layerIid": "b418d881-c210-11ef-ad6a-e93dddc64499",
+						"levelIid": "b418d880-c210-11ef-ad6a-f5b3d28c617a",
+						"worldIid": "6b43cd31-25d0-11ef-9316-03188099d48f"
+					}
+				}
+			}
+		]
+	}
+}
