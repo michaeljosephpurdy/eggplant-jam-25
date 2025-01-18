@@ -109,6 +109,12 @@ function love.load()
       load_tile_map = true,
     },
   })
+  tiny_world:addEntity({
+    screen_transition_event = {
+      transition_time = 4,
+      fade_in = true,
+    },
+  }--[[@as ScreenTransitionEvent]])
 end
 
 function love.update(dt)

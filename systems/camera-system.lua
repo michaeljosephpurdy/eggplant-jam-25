@@ -12,6 +12,7 @@ end
 ---@param props SystemProps
 function CameraSystem:initialize(props)
   self.camera_state = props.camera_state
+  self.level_info = props.level_information
   self.push = require('plugins.push')
   local windowWidth, windowHeight = love.graphics.getDimensions()
   self.push:setupScreen(GAME_WIDTH, GAME_HEIGHT, windowWidth, windowHeight, {
@@ -22,11 +23,6 @@ function CameraSystem:initialize(props)
   self.push:setBorderColor(PALETTE.BACKGROUND)
   self.position = vector(0, 0)
   self.offset = vector(-GAME_WIDTH / 2, -GAME_HEIGHT / 2)
-  -- boundaries -- TODO: stop hardcoding
-  self.left_boundary = 0
-  self.top_boundary = 0
-  self.right_boundary = 2000
-  self.bot_boundary = 2000
   self.speed = 5
 end
 
@@ -49,16 +45,16 @@ function CameraSystem:process(e, dt)
   if e.camera_actor and e.camera_actor.is_active then
     self.old_position = self.position:clone()
     self.position = e.position + self.offset
-    if e.position.x >= self.right_boundary - GAME_WIDTH / 2 then
-      self.position.x = self.right_boundary - GAME_WIDTH
-    elseif e.position.x <= self.left_boundary + GAME_WIDTH / 2 then
-      self.position.x = self.left_boundary
+    if e.position.x >= self.level_info.bottom_right.x - GAME_WIDTH / 2 then
+      self.position.x = self.level_info.bottom_right.x - GAME_WIDTH
+    elseif e.position.x <= self.level_info.top_left.x + GAME_WIDTH / 2 then
+      self.position.x = self.level_info.top_left.x
     end
     -- build y
-    if e.position.y >= self.bot_boundary - GAME_HEIGHT / 2 then
-      self.positiony = self.bot_boundary - GAME_HEIGHT
-    elseif e.position.y <= self.top_boundary + GAME_HEIGHT / 2 then
-      self.position.y = self.top_boundary
+    if e.position.y >= self.level_info.bottom_right.y - GAME_HEIGHT / 2 then
+      self.position.y = self.level_info.bottom_right.y - GAME_HEIGHT
+    elseif e.position.y <= self.level_info.top_left.y + GAME_HEIGHT / 2 then
+      self.position.y = self.level_info.top_left.y
     end
     self.position.x = lerp(self.old_position.x, self.position.x, self.speed * dt)
     self.position.y = lerp(self.old_position.y, self.position.y, self.speed * dt)
