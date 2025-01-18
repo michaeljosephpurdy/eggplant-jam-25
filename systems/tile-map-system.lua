@@ -1,12 +1,13 @@
 local TileMapSystem = tiny.processingSystem()
 TileMapSystem.filter = event_filter('load_tile_map')
 
+---@param props SystemProps
 function TileMapSystem:initialize(props)
-  self.game_state = props.game_state --[[@as GameState]]
+  self.game_state = props.game_state
   self.ldtk = require('plugins.super-simple-ldtk')
   self.ldtk:init('world')
   self.ldtk:load_all()
-  self.entity_factory = props.entity_factory --[[@as EntityFactory]]
+  self.entity_factory = props.entity_factory
   self.on_image = function(image)
     ---@type Position | Drawable
     local image_data = {

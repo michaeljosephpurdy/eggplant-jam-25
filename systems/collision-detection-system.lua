@@ -60,12 +60,13 @@ function CollisionDetectionSystem:process(e, _)
       ---@cast other -Trigger
       ---@cast other +LinkedLevel
       if other.linked_level_id then
-        self.world:addEntity({
-          event = {
-            load_tile_map = true,
+        tiny_world:addEntity({
+          screen_transition_event = {
+            transition_time = 1,
+            fade_out = true,
+            level_to_load = other.linked_level_id,
           },
-          level_id = other.linked_level_id,
-        })
+        }--[[@as ScreenTransitionEvent]])
         goto continue
       end
       ---@cast other -LinkedLevel

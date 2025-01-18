@@ -66,6 +66,9 @@
 ---@field sprite_offset? Vector.lua
 ---@field origin_offset? number
 
+---@class PlayerSpawn
+---@field player_spawn boolean
+
 ---@class Player
 ---@field player _Player
 ---@class _Player
@@ -89,3 +92,12 @@
 
 ---@class ShortLived
 ---@field time_to_live number
+
+---@class ScreenTransitionEvent
+---@field screen_transition_event _ScreenTransitionEvent
+---@class _ScreenTransitionEvent
+---@field transition_time number
+---@field progress? number
+---@field fade_in? boolean
+---@field fade_out? boolean
+---@field level_to_load? string

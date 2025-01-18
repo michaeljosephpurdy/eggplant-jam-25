@@ -15,6 +15,7 @@ function love.load()
   TILE_SIZE = 16
 
   SYSTEMS_IN_ORDER = {
+    require('systems.player-spawning-system'),
     require('systems.audio-system'),
     require('systems.collision-registration-system'),
     require('systems.keyboard-state-system'),
@@ -36,8 +37,9 @@ function love.load()
     require('systems.repel-system'),
     require('systems.camera-system'),
     require('systems.sprite-drawing-system'),
-    require('systems.text-display-system'),
     require('systems.dialogue-system'),
+    require('systems.screen-transition-system'),
+    require('systems.text-display-system'),
     require('systems.entity-cleanup-system'),
     require('systems.time-to-live-system'),
     require('systems.delayed-function-execution-system'),

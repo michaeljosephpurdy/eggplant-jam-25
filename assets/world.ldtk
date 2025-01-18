@@ -839,7 +839,7 @@
 					"entityInstances": [
 						{
 							"__identifier": "PLAYER_SPAWN",
-							"__grid": [12,1],
+							"__grid": [6,4],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": { "tilesetUid": 18, "x": 80, "y": 240, "w": 16, "h": 16 },
@@ -848,10 +848,10 @@
 							"width": 16,
 							"height": 16,
 							"defUid": 17,
-							"px": [192,16],
+							"px": [96,64],
 							"fieldInstances": [],
-							"__worldX": 608,
-							"__worldY": 960
+							"__worldX": 512,
+							"__worldY": 1008
 						},
 						{
 							"__identifier": "LEVEL_EXIT",

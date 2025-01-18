@@ -12,8 +12,8 @@ EntityFactory.types = EntityTypes
 ---@type { [EntityTypes]: table }
 EntityFactory.entities = {
   [EntityTypes.PLAYER_SPAWN] = {
-    is_player_spawn = true,
-  },
+    player_spawn = true,
+  } --[[@as PlayerSpawn]],
   [EntityTypes.LEVEL_EXIT] = {
     is_level_exit = true,
     drawable = { sprite = love.graphics.newImage('assets/exit.png') },
@@ -59,18 +59,10 @@ function EntityFactory:build(e)
   if entity.is_level_exit then
     (entity --[[@as LinkedLevel]]).linked_level_id = e.customFields.entrance.levelIid
   end
-  if entity.is_player_spawn then
-    ---@type Position
-    local player = self:build_single({
-      position = vector(e.x, e.y),
-      is_active = true,
-      type = 'PLAYER',
-    })
-    return { player }
-  end
   return { entity }
 end
 
+---@private
 ---@param e { type: EntityTypes }
 ---@return table
 function EntityFactory:build_single(e)
