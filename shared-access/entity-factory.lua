@@ -18,7 +18,8 @@ EntityFactory.entities = {
     is_level_exit = true,
     drawable = { sprite = love.graphics.newImage('assets/exit.png') },
     collidable = { radius = 16 },
-  } --[[@as Drawable | Collidable ]],
+    trigger = {},
+  } --[[@as Trigger | Drawable | Collidable ]],
   [EntityTypes.PLAYER] = {
     camera_actor = { is_active = true },
     controllable = { is_active = true },
@@ -44,7 +45,7 @@ EntityFactory.entities = {
 }
 
 ---@param e { customFields?: table, id: string, type?: string, x: number, y: number }
----@return table
+---@return table[]
 function EntityFactory:build(e)
   -- We're gonna do some weird overwriting of entity type here
   -- this is because during jam there was singular Entity object
@@ -53,7 +54,7 @@ function EntityFactory:build(e)
   -- helpful in LDtk because then fields (like 'path') can be on
   -- some entities and not all
   local entity = self:build_single({
-    position = vector(e.x, e.y),
+    position = vector(e.x or 0, e.y or 0),
     type = e.id --[[@as EntityTypes]],
   })
   if entity.is_level_exit then

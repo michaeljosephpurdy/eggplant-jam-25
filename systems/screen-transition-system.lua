@@ -4,40 +4,41 @@ ScreenTransitionSystem.filter = tiny.requireAll('screen_transition_event')
 ---@param e ScreenTransitionEvent
 function ScreenTransitionSystem:onAdd(e)
   e.screen_transition_event.progress = 0
+  e.screen_transition_event.fade_out = not e.screen_transition_event.fade_in
 end
 
 ---@param e ScreenTransitionEvent
 function ScreenTransitionSystem:process(e, dt)
-  e.screen_transition_event.progress = e.screen_transition_event.progress + dt
-  local alpha = e.screen_transition_event.progress / e.screen_transition_event.transition_time
-  if e.screen_transition_event.fade_in then
+  local event = e.screen_transition_event
+  event.progress = event.progress + dt
+  local alpha = event.progress / event.transition_time
+  if event.fade_in then
     alpha = 1 - alpha
   end
-  self.world:addEntity({ time_to_live = 0, position = vector(100, 100), text = 'alpha: ' .. tostring(alpha) }--[[@as Position | Text | ShortLived]])
+  alpha = math.clamp(0, alpha, 1)
   love.graphics.pop()
   love.graphics.setColor(0, 0, 0, alpha)
   love.graphics.rectangle('fill', 0, 0, GAME_WIDTH * GAME_SCALE, GAME_HEIGHT * GAME_SCALE, 0)
   love.graphics.push()
-  -- remove entity
-  if e.screen_transition_event.progress > e.screen_transition_event.transition_time then
+  local done = event.progress > event.transition_time
+  if done and event.fade_out and event.level_to_load then
+    self.world:clearEntities()
+    self.world:addEntity({
+      event = {
+        load_tile_map = true,
+      },
+      level_id = event.level_to_load,
+    })
+    return
+  end
+  if done then
     self.world:removeEntity(e)
-    if e.screen_transition_event.fade_out then
-      if e.screen_transition_event.level_to_load then
-        self.world:clearEntities()
-        self.world:addEntity({
-          event = {
-            load_tile_map = true,
-          },
-          level_id = e.screen_transition_event.level_to_load,
-        })
-      end
-    end
   end
 end
 
 ---@param e ScreenTransitionEvent
 function ScreenTransitionSystem:onRemove(e)
-  if not e.screen_transition_event.fade_out then
+  if e.screen_transition_event.fade_in then
     return
   end
   ---@type ScreenTransitionEvent
@@ -48,6 +49,8 @@ function ScreenTransitionSystem:onRemove(e)
     },
   }
   self.world:addEntity(fade_in_event)
+  love.graphics.setColor(0, 0, 0, 1)
+  love.graphics.rectangle('fill', 0, 0, GAME_WIDTH * GAME_SCALE, GAME_HEIGHT * GAME_SCALE, 0)
 end
 
 return ScreenTransitionSystem

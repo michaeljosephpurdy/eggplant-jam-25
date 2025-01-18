@@ -1,5 +1,5 @@
 ---@class ControllerState
-ControllerState = class('ControllerState') --[[@as ControllerState]]
+local ControllerState = class('ControllerState') --[[@as ControllerState]]
 ControllerState.static.is_singleton = true
 
 function ControllerState:initialize()

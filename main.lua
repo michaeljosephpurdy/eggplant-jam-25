@@ -33,6 +33,7 @@ function love.load()
     require('systems.trigger-resetting-system'),
     require('systems.collision-detection-system'),
     require('systems.collision-update-system'),
+    require('systems.player-level-boundary-system'),
     require('systems.jump-reset-system'),
     require('systems.repel-system'),
     require('systems.camera-system'),
@@ -65,6 +66,7 @@ function love.load()
   local entity_factory = require('shared-access.entity-factory')() --[[@as EntityFactory]]
   local game_state = require('shared-access.game-state')() --[[@as GameState]]
   local camera_state = require('shared-access.camera-state')() --[[@as CameraState]]
+  local level_information = require('shared-access.level-information')() --[[@as LevelInformation]]
   local collision_grid = require('plugins.collision-grid').new(
     16,
     1000,
@@ -88,6 +90,7 @@ function love.load()
     game_state = game_state,
     camera_state = camera_state,
     controller_state = controller_state,
+    level_information = level_information,
   }
   for i, system in ipairs(SYSTEMS_IN_ORDER) do
     print('loading #' .. tostring(i) .. ' system: ' .. tostring(system))

@@ -53,23 +53,21 @@ function CollisionDetectionSystem:process(e, _)
       end
       ---@cast e +Player
       ---@cast other +Trigger
-      if e.player and other.trigger then
+      if e.player and other.trigger and not other.trigger.triggered then
         other.trigger.triggered = true
+        ---@cast other +LinkedLevel
+        if other.linked_level_id then
+          tiny_world:addEntity({
+            screen_transition_event = {
+              transition_time = 1,
+              level_to_load = other.linked_level_id,
+            },
+          }--[[@as ScreenTransitionEvent]])
+          ---@cast other -LinkedLevel
+        end
         goto continue
       end
       ---@cast other -Trigger
-      ---@cast other +LinkedLevel
-      if other.linked_level_id then
-        tiny_world:addEntity({
-          screen_transition_event = {
-            transition_time = 1,
-            fade_out = true,
-            level_to_load = other.linked_level_id,
-          },
-        }--[[@as ScreenTransitionEvent]])
-        goto continue
-      end
-      ---@cast other -LinkedLevel
     end
     ::continue::
   end

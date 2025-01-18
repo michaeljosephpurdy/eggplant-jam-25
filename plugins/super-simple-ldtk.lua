@@ -43,6 +43,11 @@ function SuperSimpleLdtk:load_all()
   end
 end
 
+---@param level_id string
+---@param on_image function
+---@param on_tile function
+---@param on_entity function
+---@return Level
 function SuperSimpleLdtk:load(level_id, on_image, on_tile, on_entity)
   print('loading level_id: ' .. level_id)
   local data = self.level_data[level_id]
