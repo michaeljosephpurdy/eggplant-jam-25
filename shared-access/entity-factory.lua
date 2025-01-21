@@ -35,7 +35,12 @@ EntityFactory.entities = {
       move_forward = false,
       move_backward = false,
     },
-    jumpable = { can_jump = true, jump_height = 300 },
+    jumpable = {
+      state = 'jumping',
+      can_jump = true,
+      small_jump_height = 225,
+      large_jump_height = 300,
+    },
     velocity = vector(0, 0),
     delta_position = vector(0, 0),
     future_position = vector(0, 0),

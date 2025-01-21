@@ -40,10 +40,12 @@
 ---@class Jumpable
 ---@field jumpable _Jumpable
 ---@class _Jumpable
----@field jump_height? number
----@field can_jump? boolean
----@field perform_single_jump? boolean
----@field did_single_jump? boolean
+---@field charge? number
+---@field state 'idle' | 'charging' | 'jump' | 'jumping'
+---@field small_jump_height number
+---@field large_jump_height number
+---@field move_forward? boolean
+---@field move_backward? boolean
 
 ---@class Movable
 ---@field movable _Movable

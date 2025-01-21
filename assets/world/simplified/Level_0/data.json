@@ -6,7 +6,12 @@
 	"width": 1152,
 	"height": 312,
 	"bgColor": "#696A79",
-	"neighbourLevels": [],
+	"neighbourLevels": [
+		{
+			"levelIid": "b418d880-c210-11ef-ad6a-f5b3d28c617a",
+			"dir": "s"
+		}
+	],
 	"customFields" : {},
 	"layers": [
 		"Background.png",
@@ -19,8 +24,8 @@
 				"id": "PLAYER_SPAWN",
 				"iid": "297be7e0-c210-11ef-ad6a-57f954591861",
 				"layer": "Entities",
-				"x": 96,
-				"y": 176,
+				"x": 64,
+				"y": 224,
 				"width": 16,
 				"height": 16,
 				"color": 0,
@@ -32,8 +37,8 @@
 				"id": "LEVEL_EXIT",
 				"iid": "baabbcd0-c210-11ef-ad6a-cfc3a4536298",
 				"layer": "Entities",
-				"x": 256,
-				"y": 272,
+				"x": 1088,
+				"y": 288,
 				"width": 16,
 				"height": 16,
 				"color": 2434341,

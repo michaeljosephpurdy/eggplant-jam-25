@@ -22,11 +22,10 @@ function love.load()
     require('systems.controller-update-system'),
     require('systems.tile-map-system'),
     require('systems.path-following-system'),
-    require('systems.controllable-to-movable-and-jumpable-system'),
+    require('systems.controllable-to-movable-system'),
     require('systems.movable-to-delta-position-system'),
-    require('systems.jumpable-to-delta-position-system'),
     require('systems.movable-to-velocity-system'),
-    require('systems.jumpable-to-velocity-system'),
+    require('systems.controllable-to-jumpable-system'),
     require('systems.gravity-application-system'),
     require('systems.entity-movement-system'),
     require('systems.sprite-animating-system'),
@@ -44,11 +43,11 @@ function love.load()
     require('systems.entity-cleanup-system'),
     require('systems.time-to-live-system'),
     require('systems.delayed-function-execution-system'),
-    require('systems.debug-overlay-system'),
+    --require('systems.debug-controller-system'),
   }
 
   PALETTE = {
-    BACKGROUND = { love.math.colorFromBytes(88, 245, 177) },
+    BACKGROUND = { love.math.colorFromBytes(0, 0, 0) },
   }
 
   local windowWidth, windowHeight = love.window.getDesktopDimensions()
@@ -91,6 +90,7 @@ function love.load()
     camera_state = camera_state,
     controller_state = controller_state,
     level_information = level_information,
+    screen_information = { width = GAME_WIDTH, height = GAME_HEIGHT },
   }
   for i, system in ipairs(SYSTEMS_IN_ORDER) do
     print('loading #' .. tostring(i) .. ' system: ' .. tostring(system))

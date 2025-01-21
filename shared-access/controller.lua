@@ -5,93 +5,20 @@ ControllerState.static.is_singleton = true
 function ControllerState:initialize()
   self.left = 0
   self.right = 0
-end
-
-function ControllerState:push(keycode)
-  if
-    keycode == 'f1'
-    or keycode == 'f2'
-    or keycode == 'f3'
-    or keycode == 'f4'
-    or keycode == 'f5'
-    or keycode == 'tab'
-    or keycode == 'capslock'
-    or keycode == 'lshift'
-    or keycode == 'lctrl'
-    or keycode == 'lalt'
-    or keycode == 'lgui'
-    or keycode == '`'
-    or keycode == '1'
-    or keycode == '2'
-    or keycode == '3'
-    or keycode == '4'
-    or keycode == '5'
-    or keycode == 'q'
-    or keycode == 'w'
-    or keycode == 'e'
-    or keycode == 'r'
-    or keycode == 't'
-    or keycode == 'a'
-    or keycode == 's'
-    or keycode == 'd'
-    or keycode == 'f'
-    or keycode == 'g'
-    or keycode == 'z'
-    or keycode == 'x'
-    or keycode == 'c'
-    or keycode == 'v'
-    or keycode == 'b'
-  then
-    self.left = self.left + 1
-    return
-  end
-  self.right = self.right + 1
-end
-
-function ControllerState:release(keycode)
-  if
-    keycode == 'f1'
-    or keycode == 'f2'
-    or keycode == 'f3'
-    or keycode == 'f4'
-    or keycode == 'f5'
-    or keycode == 'tab'
-    or keycode == 'capslock'
-    or keycode == 'lshift'
-    or keycode == 'lctrl'
-    or keycode == 'lalt'
-    or keycode == 'lgui'
-    or keycode == '`'
-    or keycode == '1'
-    or keycode == '2'
-    or keycode == '3'
-    or keycode == '4'
-    or keycode == '5'
-    or keycode == 'q'
-    or keycode == 'w'
-    or keycode == 'e'
-    or keycode == 'r'
-    or keycode == 't'
-    or keycode == 'a'
-    or keycode == 's'
-    or keycode == 'd'
-    or keycode == 'f'
-    or keycode == 'g'
-    or keycode == 'z'
-    or keycode == 'x'
-    or keycode == 'c'
-    or keycode == 'v'
-    or keycode == 'b'
-    or keycode == 'left'
-    or keycode == 'down'
-  then
-    self.left = 0
-    return
-  end
-  self.right = 0
+  self.changed = false
+  ---@private
+  self.right_dominant = false
+  ---@private
+  self.was_right_dominant = false
+  ---@private
+  self.left_dominant = false
+  ---@private
+  self.was_left_dominant = false
 end
 
 function ControllerState:update()
+  self.was_right_dominant = self.right_dominant
+  self.was_left_dominant = self.left_dominant
   if
     love.keyboard.isDown('f1')
     or love.keyboard.isDown('f2')
@@ -129,6 +56,8 @@ function ControllerState:update()
     or love.keyboard.isDown('down')
   then
     self.left = self.left + 1
+  else
+    self.left = 0
   end
   if
     love.keyboard.isDown('f6')
@@ -175,7 +104,31 @@ function ControllerState:update()
     or love.keyboard.isDown('up')
   then
     self.right = self.right + 1
+  else
+    self.right = 0
   end
+  self.right_dominant = self:is_right_dominant()
+  self.left_dominant = self:is_left_dominant()
+end
+
+function ControllerState:right_down()
+  return self.right > 0
+end
+
+function ControllerState:left_down()
+  return self.left > 0
+end
+
+function ControllerState:is_right_dominant()
+  return self.left > 0 and self.right > self.left
+end
+
+function ControllerState:is_left_dominant()
+  return self.right > 0 and self.left > self.right
+end
+
+function ControllerState:flipped_directions()
+  return (self.was_right_dominant and self.right == 0) or (self.was_left_dominant and self.left == 0)
 end
 
 return ControllerState

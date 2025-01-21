@@ -24,6 +24,7 @@ function CameraSystem:initialize(props)
   self.position = vector(0, 0)
   self.offset = vector(-GAME_WIDTH / 2, -GAME_HEIGHT / 2)
   self.speed = 5
+  self.screen_info = props.screen_information
 end
 
 function CameraSystem:preWrap(dt)
@@ -37,6 +38,7 @@ end
 function CameraSystem:onAdd(e)
   if e.resize and e.is_event then
     self.push:resize(e.width, e.height)
+    self.screen_info.width, self.screen_info.height = e.width, e.height
   end
 end
 

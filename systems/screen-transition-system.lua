@@ -1,6 +1,11 @@
 local ScreenTransitionSystem = tiny.processingSystem()
 ScreenTransitionSystem.filter = tiny.requireAll('screen_transition_event')
 
+---@param props SystemProps
+function ScreenTransitionSystem:initialize(props)
+  self.screen_info = props.screen_information
+end
+
 ---@param e ScreenTransitionEvent
 function ScreenTransitionSystem:onAdd(e)
   e.screen_transition_event.progress = 0
@@ -18,7 +23,7 @@ function ScreenTransitionSystem:process(e, dt)
   alpha = math.clamp(0, alpha, 1)
   love.graphics.pop()
   love.graphics.setColor(0, 0, 0, alpha)
-  love.graphics.rectangle('fill', 0, 0, GAME_WIDTH * GAME_SCALE, GAME_HEIGHT * GAME_SCALE, 0)
+  love.graphics.rectangle('fill', 0, 0, self.screen_info.width, self.screen_info.height)
   love.graphics.push()
   local done = event.progress > event.transition_time
   if done and event.fade_out and event.level_to_load then
@@ -49,8 +54,10 @@ function ScreenTransitionSystem:onRemove(e)
     },
   }
   self.world:addEntity(fade_in_event)
+  love.graphics.push()
   love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle('fill', 0, 0, GAME_WIDTH * GAME_SCALE, GAME_HEIGHT * GAME_SCALE, 0)
+  love.graphics.rectangle('fill', 0, 0, self.screen_info.width, self.screen_info.height)
+  love.graphics.pop()
 end
 
 return ScreenTransitionSystem
